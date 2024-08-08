@@ -1,80 +1,68 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
-const Signup = () => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-   
-  });
-
-  const handleChange = (e) => {
-    const {name ,value}=e.target
-    setForm({
-        ...form,
-        [name]:value
-    })
-  
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(form); 
-try {
-    const response=await axios.post("http://localhost:4000/register",form)
-    console.log("data save successfuly",response.data)
-    setForm({
-        name: '',
-        email: '',
-        password: '',
-        mobile: ''
-    })
-} catch (error) {
-    console.log("failed to register",error.message)
+import React from 'react';
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBInput,
+  MDBIcon,
+  MDBCheckbox
 }
+from 'mdb-react-ui-kit';
 
-  };
-
+function App() {
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"/>
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Signup for account</h2>
-      </div>
-    
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Name</label>
-            <div className="mt-2">
-              <input id="name" name="name" value={form.name} type="text" onChange={handleChange} autoComplete="name" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-            </div>
-          </div>
+    <MDBContainer fluid>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-            <div className="mt-2">
-              <input id="email" name="email"value={form.email} type="email" onChange={handleChange} autoComplete="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
+      <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}>
+        <MDBCardBody>
+          <MDBRow>
+            <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
+
+            <div className="divider d-flex align-items-center my-3">
+            <p className="text-center fw-bold mx-2 mb-0">Sign up </p>
           </div>
-    
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
-            </div>
-            <div className="mt-2">
-              <input id="password" name="password"value={form.password} type="password" onChange={handleChange} autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-            </div>
-          </div>
-  
-          <div>
-            <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign up</button>
-          </div>
-        </form>
-      </div>
-    </div>
+              <div className="d-flex flex-row align-items-center mb-4 ">
+                <MDBIcon fas icon="user me-3" size='lg'/>
+                <MDBInput label='Your Name' id='form1' type='text' className='w-100'/>
+              </div>
+
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="envelope me-3" size='lg'/>
+                <MDBInput label='Your Email' id='form2' type='email'/>
+              </div>
+
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="lock me-3" size='lg'/>
+                <MDBInput label='Password' id='form3' type='password'/>
+              </div>
+
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="key me-3" size='lg'/>
+                <MDBInput label='Repeat your password' id='form4' type='password'/>
+              </div>
+
+              <div className='mb-4'>
+                <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
+              </div>
+
+              <MDBBtn className='mb-4' size='lg'>Register</MDBBtn>
+
+            </MDBCol>
+
+            <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>
+              <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp' fluid/>
+            </MDBCol>
+
+          </MDBRow>
+        </MDBCardBody>
+      </MDBCard>
+
+    </MDBContainer>
   );
 }
 
-export default Signup;
+export default App;

@@ -1,30 +1,34 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter,Routes,Route } from 'react-router-dom';
-import Signup from './navbar/signup';
-import Login from './navbar/signin';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './navbar/navbar';
-import Services from './navbar/services';
-import About from './navbar/about';
-import Contact from './navbar/contact';
-import Bags from './navbar/bags';
-import Arr from './navbar/arr';
+import Login from './navbar/login';
+import Signup from './navbar/signup';
+import Dasem from './navbar/dasem';
+import LeaveManagment from './navbar/LeaveManagment';
+import WorkManagement from './navbar/WorkManagement'; 
+import ChatApp from './navbar/chatapp';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
- return (
-  <BrowserRouter>
-  <Routes>
-    <Route path='/' element={<Navbar/>}/>
-    <Route path='/men' element={<Services/>}/>
-    <Route path='/women' element={<About/>}/>
-    <Route path='/fragrances' element={<Contact/>}/>
-    <Route path='/signin' element={<Login/>}/>
-    <Route path='/signup' element={<Signup/>}/>
-    <Route path='/bags' element={<Bags/>}/>
-    <Route path='/arrival' element={<Arr/>}/>
-  </Routes>
-  </BrowserRouter>
-  );
+    return (
+             
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<Navbar />} />
+                    <Route path='/signup' element={<Signup />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/dasem' element={<Dasem />} />
+                    <Route path="/LeaveManagment" element={<LeaveManagment />} />
+                    <Route path="/WorkManagement" element={<WorkManagement />} />
+                    <Route path="/chat" element={<ChatApp />} />
+          
+                </Routes>
+            </BrowserRouter>        
+    );
 }
-
 export default App;
+
+
+
