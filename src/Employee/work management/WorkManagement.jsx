@@ -4,10 +4,8 @@ import EmployeeDropdown from "./EmployeeDropdown";
 import ModuleList from "./ModuleList";
 import ProgressGraph from "./ProgressGraph";
 import { Link } from 'react-router-dom';
-import "../App.css";
 
 const WorkManagement = () => {
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedProject, setSelectedProject] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -84,9 +82,9 @@ const WorkManagement = () => {
           width: '100%',
           top: '0',
           zIndex: '900',
-          padding: '0.8rem 0.3rem', // Adjust padding to increase height
+          padding: '0.8rem 0.3rem',
           fontSize: '1.2rem',
-          backgroundColor: '#003135' // Set navbar background color
+          backgroundColor: '#003135'
         }}>
         <button className="btn btn-outline-secondary me-2" onClick={toggleSidebar}>
           <i className="fas fa-bars"></i>
@@ -107,8 +105,8 @@ const WorkManagement = () => {
                     width: '1.5rem',
                     height: '1.5rem',
                     lineHeight: '1rem',
-                    zIndex: 1200, // Ensures it's above other elements
-                    color: '#ffffff' // Set badge text color to white
+                    zIndex: 1200,
+                    color: '#ffffff'
                   }}
                 >
                   2
@@ -128,7 +126,7 @@ const WorkManagement = () => {
         style={{
           width: '215px',
           minHeight: '100vh',
-          marginTop: '70px', // Adjust to avoid overlap with the navbar
+          marginTop: '70px',
           boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
           position: 'fixed',
           top: '0',
@@ -136,7 +134,7 @@ const WorkManagement = () => {
           zIndex: '900',
           transition: 'transform 0.3s ease',
           transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-          backgroundColor: '#003135', // Set sidebar background color
+          backgroundColor: '#003135',
         }}
       >
         <ul className="nav flex-column mt-4">
@@ -147,61 +145,83 @@ const WorkManagement = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link text-light" to="/WorkManagement">
-              <i className="fas fa-tachometer-alt me-2 text-success"></i>Work
+              <i className="fas fa-briefcase me-2 text-success"></i>Work
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link text-light" to="/LeaveManagment">
-              <i className="fas fa-tachometer-alt me-2 text-warning"></i>Leave
+              <i className="fas fa-calendar-alt me-2 text-warning"></i>Leave
             </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link text-light" to="/chat">
-        <i className="fas fa-tachometer-alt me-2 text-info"></i>Communication
-      </Link>
+            <Link className="nav-link text-light" to="/chat">
+              <i className="fas fa-comments me-2 text-info"></i>Communication
+            </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link text-light" to="/login">
-        <i className="fas fa-tachometer-alt me-2 text-danger"></i>logout
-      </Link>
+            <Link className="nav-link text-light" to="/">
+              <i className="fas fa-sign-out-alt me-2 text-danger"></i>Logout
+            </Link>
           </li>
         </ul>
       </div>
 
       {/* Main content area */}
       <div
-        className="container App"
+        className="container mt-5"
         style={{
-          marginTop: '90px', // Adjust this value based on the height of your navbar
           marginLeft: isSidebarOpen ? '215px' : '0',
           transition: 'margin-left 0.3s ease',
-          padding: '20px', // Adjust padding to match App styling
+          padding: '20px',
         }}
       >
-        {/* Content */}
-        <h1 className="text-center">Work Management</h1>
-        <div className="project-dropdown mb-3">
-          <ProjectDropdown onSelect={handleProjectSelect} />
-        </div>
-
-        <div className="employee-dropdown mb-3">
+        {/* Select Employee Box */}
+        <div className="mb-4 p-4 border rounded" style={{ backgroundColor: '#f8f9fa' }}>
+        <div className="d-flex justify-content-center mb-3">
+            <h2 className="text-center"
+              style={{
+                fontSize: '2rem',
+                color: '#ffffff',
+                background: 'linear-gradient(to right, #007bff, #00d2ff)',
+                padding: '10px 20px',
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                fontWeight: 'bold',
+                textShadow: '1px 1px 3px rgba(0,0,0,0.3)',
+                display: 'inline-block'
+              }}
+            >
+              Work Management
+            </h2>
+          </div>
           <EmployeeDropdown employees={employees} onSelect={handleEmployeeSelect} />
         </div>
-
-        <h2 className="mt-4">Selected Project: {selectedProject}</h2>
+        
         {selectedEmployee && (
-          <>
-            <h2>Employee: {selectedEmployee.name}</h2>
-            <div className="module-list mb-4">
-              <ModuleList
-                modules={selectedEmployee.modules}
-                onModuleUpdate={handleModuleUpdate}
-              />
+          <div>
+            {/* Selected Project and Progress Graph */}
+            <div className="row">
+              <div className="col-md-6 mb-4">
+                <div className="p-4 border rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                  <ProjectDropdown onSelect={handleProjectSelect} />
+                  {selectedProject && (
+                    <>
+                      <ModuleList
+                        modules={selectedEmployee.modules}
+                        onModuleUpdate={handleModuleUpdate}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="col-md-6 mb-4">
+                <div className="p-4 border rounded" style={{ backgroundColor: '#f8f9fa', height: '328px' }}>
+                  <ProgressGraph modules={selectedEmployee.modules} />
+                </div>
+              </div>
             </div>
-            <div className="progress-graph">
-              <ProgressGraph modules={selectedEmployee.modules} />
-            </div>
-          </>
+          </div>
         )}
       </div>
     </div>

@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, ProgressBar } from 'react-bootstrap';
-import './LeaveManagment.css';
+import { Button, Form, ProgressBar, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const LeaveManagment = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [showApplyLeaveModal, setShowApplyLeaveModal] = useState(false);
-  const [showLeaveBalanceModal, setShowLeaveBalanceModal] = useState(false);
+  const [activeSection, setActiveSection] = useState(null); // Track the active section
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleShowApplyLeaveModal = () => setShowApplyLeaveModal(true);
-  const handleCloseApplyLeaveModal = () => setShowApplyLeaveModal(false);
-
-  const handleShowLeaveBalanceModal = () => setShowLeaveBalanceModal(true);
-  const handleCloseLeaveBalanceModal = () => setShowLeaveBalanceModal(false);
+  const handleShowApplyLeave = () => setActiveSection('applyLeave');
+  const handleShowLeaveBalance = () => setActiveSection('leaveBalance');
+  const handleCloseAllSections = () => setActiveSection(null);
 
   // Dummy data for leave balance
   const totalLeave = 30;
@@ -95,24 +91,24 @@ const LeaveManagment = () => {
             </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link text-light" to="/WorkManagement">
-        <i className="fas fa-tachometer-alt me-2 text-success"></i>Work
-      </Link>
-          </li>
-          <li className="nav-item">
-          <Link className="nav-link text-light" to="/LeaveManagment">
-              <i className="fas fa-tachometer-alt me-2 text-warning"></i>Leave
+            <Link className="nav-link text-light" to="/WorkManagement">
+              <i className="fas fa-briefcase me-2 text-success"></i>Work
             </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link text-light" to="/chat">
-        <i className="fas fa-tachometer-alt me-2 text-info"></i>Communication
-      </Link>
+            <Link className="nav-link text-light" to="/LeaveManagment">
+              <i className="fas fa-calendar-alt me-2 text-warning"></i>Leave
+            </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link text-light" to="/login">
-        <i className="fas fa-tachometer-alt me-2 text-danger"></i>logout
-      </Link>
+            <Link className="nav-link text-light" to="/chat">
+              <i className="fas fa-comments me-2 text-info"></i>Communication
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link text-light" to="/">
+              <i className="fas fa-sign-out-alt me-2 text-danger"></i>Logout
+            </Link>
           </li>
         </ul>
       </div>
@@ -128,78 +124,73 @@ const LeaveManagment = () => {
           transition: 'margin-left 0.3s ease'
         }}
       >
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap gap-3">
           <Button 
             variant="primary" 
-            onClick={handleShowApplyLeaveModal} 
-            className="me-2 btn-lg rounded" 
+            onClick={handleShowApplyLeave} 
+            className={`btn-lg rounded-pill shadow-lg px-4 py-2 text-white fw-bold ${activeSection === 'applyLeave' ? 'active' : ''}`}
             style={{ 
-              padding: '10px 20px', 
-              fontSize: '1.2rem', 
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              transition: 'background-color 0.3s ease',
-              backgroundColor: '#007bff',
-              border: 'none'
+              backgroundColor: '#007bff', 
+              borderColor: '#007bff',
+              transition: 'background-color 0.3s ease, transform 0.2s ease'
             }}
           >
             Apply for Leave
           </Button>
           <Button 
-            variant="info" 
-            onClick={handleShowLeaveBalanceModal} 
-            className="btn-lg rounded" 
+            variant="primary" 
+            onClick={handleShowLeaveBalance} 
+            className={`btn-lg rounded-pill shadow-lg px-4 py-2 text-white fw-bold ${activeSection === 'applyLeave' ? 'active' : ''}`}
             style={{ 
-              padding: '10px 20px', 
-              fontSize: '1.2rem', 
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              transition: 'background-color 0.3s ease',
-              backgroundColor: '#17a2b8',
-              border: 'none'
+              backgroundColor: '#007bff', 
+              borderColor: '#007bff',
+              transition: 'background-color 0.3s ease, transform 0.2s ease'
             }}
           >
             Leave Balance Chart
           </Button>
         </div>
 
-        {/* Apply for Leave Modal */}
-        <Modal show={showApplyLeaveModal} onHide={handleCloseApplyLeaveModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Apply for Leave</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group controlId="formLeaveDates">
-                <Form.Label>Dates</Form.Label>
-                <Form.Control type="date" placeholder="Select dates" />
-              </Form.Group>
-              <Form.Group controlId="formLeaveReason">
-                <Form.Label>Reason</Form.Label>
-                <Form.Control as="textarea" rows={3} placeholder="Enter reason for leave" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </Modal.Body>
-        </Modal>
+        {activeSection === 'applyLeave' && (
+          <Row className='mb-4 mt-3'>
+            <Col>
+              <div className="p-4 border rounded bg-light">
+                <h4>Apply for Leave</h4>
+                <Form>
+                  <Form.Group controlId="formLeaveDates">
+                    <Form.Label>Dates</Form.Label>
+                    <Form.Control type="date" placeholder="Select dates" />
+                  </Form.Group>
+                  <Form.Group controlId="formLeaveReason">
+                    <Form.Label>Reason</Form.Label>
+                    <Form.Control as="textarea" rows={3} placeholder="Enter reason for leave" />
+                  </Form.Group>
+                  <Button variant="primary" type="submit" className="mt-3">
+                    Submit
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
+        )}
 
-        {/* Leave Balance Modal */}
-        <Modal show={showLeaveBalanceModal} onHide={handleCloseLeaveBalanceModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Leave Balance Chart</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="leave-balance-chart">
-              <h5>Total Leave: {totalLeave}</h5>
-              <h5>Taken Leave: {takenLeave}</h5>
-              <h5>Remaining Leave: {remainingLeave}</h5>
-              <ProgressBar>
-                <ProgressBar variant="success" now={(takenLeave / totalLeave) * 100} label={`${takenLeave}`} key={1} />
-                <ProgressBar variant="warning" now={(remainingLeave / totalLeave) * 100} label={`${remainingLeave}`} key={2} />
-              </ProgressBar>
-            </div>
-          </Modal.Body>
-        </Modal>
+        {/* Leave Balance Chart */}
+        {activeSection === 'leaveBalance' && (
+          <Row className='mb-4 mt-3'>
+            <Col >
+              <div className="p-4 border rounded bg-light">
+                <h4>Leave Balance Chart</h4>
+                <h5>Total Leave: {totalLeave}</h5>
+                <h5>Taken Leave: {takenLeave}</h5>
+                <h5>Remaining Leave: {remainingLeave}</h5>
+                <ProgressBar>
+                  <ProgressBar variant="success" now={(takenLeave / totalLeave) * 100} label={`${takenLeave}`} key={1} />
+                  <ProgressBar variant="warning" now={(remainingLeave / totalLeave) * 100} label={`${remainingLeave}`} key={2} />
+                </ProgressBar>
+              </div>
+            </Col>
+          </Row>
+        )}
       </div>
     </div>
   );

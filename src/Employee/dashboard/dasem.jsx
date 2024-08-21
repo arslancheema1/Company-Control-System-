@@ -81,22 +81,22 @@ const Dasem = () => {
     </li>
     <li className="nav-item">
     <Link className="nav-link text-light" to="/WorkManagement">
-        <i className="fas fa-tachometer-alt me-2 text-success"></i>Work
+        <i className="fas fa-briefcase me-2 text-success"></i>Work
       </Link>
     </li>
     <li className="nav-item">
     <Link className="nav-link text-light" to="/LeaveManagment">
-        <i className="fas fa-tachometer-alt me-2 text-warning"></i>Leave
+        <i className="fas fa-calendar-alt me-2 text-warning"></i>Leave
       </Link>
     </li>
     <li className="nav-item">
     <Link className="nav-link text-light" to="/chat">
-        <i className="fas fa-tachometer-alt me-2 text-info"></i>Communication
+        <i className="fas fa-comments me-2 text-info"></i>Communication
       </Link>
     </li>
     <li className="nav-item">
-    <Link className="nav-link text-light" to="/login">
-        <i className="fas fa-tachometer-alt me-2 text-danger"></i>logout
+    <Link className="nav-link text-light" to="/">
+        <i className="fas fa-sign-out-alt me-2 text-danger"></i>logout
       </Link>
     </li>
   </ul>

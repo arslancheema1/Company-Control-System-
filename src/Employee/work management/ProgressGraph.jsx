@@ -27,6 +27,7 @@ const ProgressGraph = ({ modules }) => {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false, // Ensures the canvas can resize
         plugins: {
           legend: {
             position: 'top',
@@ -45,9 +46,9 @@ const ProgressGraph = ({ modules }) => {
   }, [modules]);
 
   return (
-    <div className="progress-graph">
+    <div className="progress-graph" style={{ position: 'relative', height: '250px' }}>
       <h3>Progress Graph</h3>
-      <canvas ref={chartRef}></canvas>
+      <canvas ref={chartRef} style={{ width: '100%', height: '100%' }}></canvas>
     </div>
   );
 };
