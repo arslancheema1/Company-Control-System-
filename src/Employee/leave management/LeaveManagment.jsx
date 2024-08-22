@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Form, ProgressBar, Row, Col } from 'react-bootstrap';
+import { Button, Form, ProgressBar, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const LeaveManagment = () => {
+const LeaveManagement = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activeSection, setActiveSection] = useState(null); // Track the active section
+  const [activeSection, setActiveSection] = useState('applyLeave'); // Default section is 'applyLeave'
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -12,7 +13,6 @@ const LeaveManagment = () => {
 
   const handleShowApplyLeave = () => setActiveSection('applyLeave');
   const handleShowLeaveBalance = () => setActiveSection('leaveBalance');
-  const handleCloseAllSections = () => setActiveSection(null);
 
   // Dummy data for leave balance
   const totalLeave = 30;
@@ -95,11 +95,52 @@ const LeaveManagment = () => {
               <i className="fas fa-briefcase me-2 text-success"></i>Work
             </Link>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link text-light" to="/LeaveManagment">
+          <li className="nav-item dropdown">
+            <Link
+              className="nav-link dropdown-toggle text-light"
+              to="#"
+              id="LeaveDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              onClick={(e) => e.preventDefault()} // Prevent default action
+            >
               <i className="fas fa-calendar-alt me-2 text-warning"></i>Leave
             </Link>
+            <ul className="dropdown-menu" aria-labelledby="LeaveDropdown" style={{ backgroundColor: '#003135' }}>
+              <li>
+                <a
+                  className={`dropdown-item text-light ${activeSection === 'applyLeave' ? 'active' : ''}`}
+                  href="#"
+                  style={{ 
+                    backgroundColor: '#343a40',
+                
+                  }}
+                  onMouseOver={(e) => e.target.style.backgroundColor = '#495057'}
+                  onMouseOut={(e) => e.target.style.backgroundColor = ''}
+                  onClick={handleShowApplyLeave}
+                >
+                  Apply leave
+                </a>
+              </li>
+              <li>
+                <a
+                  className={`dropdown-item text-light ${activeSection === 'leaveBalance' ? 'active' : ''}`}
+                  href="#"
+                  style={{ 
+                    backgroundColor: '#343a40',
+                   
+                  }}
+                  onMouseOver={(e) => e.target.style.backgroundColor = '#495057'}
+                  onMouseOut={(e) => e.target.style.backgroundColor = ''}
+                  onClick={handleShowLeaveBalance}
+                >
+                  Leave Balance Chart
+                </a>
+              </li>    
+            </ul>
           </li>
+        
           <li className="nav-item">
             <Link className="nav-link text-light" to="/chat">
               <i className="fas fa-comments me-2 text-info"></i>Communication
@@ -123,33 +164,7 @@ const LeaveManagment = () => {
           background: '#ffffff',
           transition: 'margin-left 0.3s ease'
         }}
-      >
-        <div className="d-flex flex-wrap gap-3">
-          <Button 
-            variant="primary" 
-            onClick={handleShowApplyLeave} 
-            className={`btn-lg rounded-pill shadow-lg px-4 py-2 text-white fw-bold ${activeSection === 'applyLeave' ? 'active' : ''}`}
-            style={{ 
-              backgroundColor: '#007bff', 
-              borderColor: '#007bff',
-              transition: 'background-color 0.3s ease, transform 0.2s ease'
-            }}
-          >
-            Apply for Leave
-          </Button>
-          <Button 
-            variant="primary" 
-            onClick={handleShowLeaveBalance} 
-            className={`btn-lg rounded-pill shadow-lg px-4 py-2 text-white fw-bold ${activeSection === 'applyLeave' ? 'active' : ''}`}
-            style={{ 
-              backgroundColor: '#007bff', 
-              borderColor: '#007bff',
-              transition: 'background-color 0.3s ease, transform 0.2s ease'
-            }}
-          >
-            Leave Balance Chart
-          </Button>
-        </div>
+      >    
 
         {activeSection === 'applyLeave' && (
           <Row className='mb-4 mt-3'>
@@ -174,10 +189,9 @@ const LeaveManagment = () => {
           </Row>
         )}
 
-        {/* Leave Balance Chart */}
         {activeSection === 'leaveBalance' && (
           <Row className='mb-4 mt-3'>
-            <Col >
+            <Col>
               <div className="p-4 border rounded bg-light">
                 <h4>Leave Balance Chart</h4>
                 <h5>Total Leave: {totalLeave}</h5>
@@ -196,4 +210,4 @@ const LeaveManagment = () => {
   );
 };
 
-export default LeaveManagment;
+export default LeaveManagement;

@@ -11,8 +11,10 @@ function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === 'arslan12@gmail.com' && password === 'arslan') {
-      navigate('/dasem');
+    if (email === 'employee@gmail.com' && password === 'employee') {
+      navigate('/dasem'); // Navigate to route for the first set of credentials
+    } else if (email === 'management@gmail.com' && password === 'manage') {
+      navigate('/dashboard'); // Navigate to route for the second set of credentials
     } else {
       alert('Invalid email or password');
     }

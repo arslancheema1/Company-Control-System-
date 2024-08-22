@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import GroupCreation from './GroupCreation';
+import TaskAssignment from './TaskAssignment';
+import PerformanceMonitor from './PerformanceMonitor';
 
 const GroupManagement = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeComponent, setActiveComponent] = useState('createGroup'); // Default to 'createGroup'
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleComponentChange = (component) => {
+    setActiveComponent(component);
   };
 
   return (
@@ -75,10 +83,56 @@ const GroupManagement = () => {
               <i className="fas fa-users me-2 text-warning"></i>Employe Managment
             </Link>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link text-light" to="/GroupManagement">
+          <li className="nav-item dropdown">
+            <Link
+              className="nav-link dropdown-toggle text-light"
+              to="#"
+              id="GroupManagementDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              onClick={(e) => e.preventDefault()} // Prevent default action
+            >
               <i className="fas fa-users-cog me-2 text-info"></i>Group Management
             </Link>
+            <ul className="dropdown-menu" aria-labelledby="GroupManagementDropdown" style={{ backgroundColor: '#003135' }}>
+              <li>
+                <a
+                  className="dropdown-item text-white"
+                  href="#"
+                  style={{ backgroundColor: '#343a40' }} // Adjust background color
+                  onMouseOver={(e) => e.target.style.backgroundColor = '#495057'} // Hover color
+                  onMouseOut={(e) => e.target.style.backgroundColor = ''} // Default background color
+                  onClick={() => handleComponentChange('createGroup')}
+                >
+                  Create Group
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item text-white"
+                  href="#"
+                  style={{ backgroundColor: '#343a40' }} // Adjust background color
+                  onMouseOver={(e) => e.target.style.backgroundColor = '#495057'} // Hover color
+                  onMouseOut={(e) => e.target.style.backgroundColor = ''} // Default background color
+                  onClick={() => handleComponentChange('assignTask')}
+                >
+                  Assign Task
+                </a>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item text-white"
+                  href="#"
+                  style={{ backgroundColor: '#343a40' }} // Adjust background color
+                  onMouseOver={(e) => e.target.style.backgroundColor = '#495057'} // Hover color
+                  onMouseOut={(e) => e.target.style.backgroundColor = ''} // Default background color
+                  onClick={() => handleComponentChange('performanceMonitor')}
+                >
+                  Performance Monitor
+                </a>
+              </li>
+            </ul>
           </li>
           <li className="nav-item">
             <Link className="nav-link text-light" to="/Leave">
@@ -87,14 +141,14 @@ const GroupManagement = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link text-light" to="/report">
-              <i className="fas fa-chart-pie me-2 "style={{ color: '#6a5acd'}}></i>Reporting & Analytics
+              <i className="fas fa-chart-pie me-2 " style={{ color: '#6a5acd'}}></i>Reporting & Analytics
             </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link text-light" to="/communication">
-        <i className="fas fa-comments me-2 text-info"></i>Communication
-      </Link>
-      </li>
+            <Link className="nav-link text-light" to="/communication">
+              <i className="fas fa-comments me-2 text-info"></i>Communication
+            </Link>
+          </li>
           <li className="nav-item">
             <Link className="nav-link text-light" to="/">
               <i className="fas fa-sign-out-alt me-2 text-danger"></i>Logout
@@ -102,8 +156,14 @@ const GroupManagement = () => {
           </li>
         </ul>
       </div>
+
+      {/* Main Content */}
+      <div style={{ marginLeft: isSidebarOpen ? '215px' : '0', padding: '2rem', minHeight: '100vh' }}>
+        {activeComponent === 'createGroup' && <GroupCreation />}
+        {activeComponent === 'assignTask' && <TaskAssignment />}
+        {activeComponent === 'performanceMonitor' && <PerformanceMonitor />}
       </div>
-      
+    </div>
   );
 };
 
